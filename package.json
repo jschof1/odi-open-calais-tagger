@@ -1,0 +1,17 @@
+{
+  "name": "odi-open-calais-tagger",
+  "version": "1.0.0",
+  "description": "open calais tagger for odi resources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "airtable": "^0.11.5",
+    "fs": "*",
+    "nodemon": "^2.0.20",
+    "opencalais-tagging": "^2.2.0"
+  },
+  "author": "Jack Schofield",
+  "license": "ISC"
+}
