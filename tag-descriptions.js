@@ -13,7 +13,7 @@ const loadAndFetch = async () => {
 
   const interval = setInterval(async () => {
     i++;
-    if (i === arr.length - fileData.length - 1) {
+    if (i === 150) {
       fs.writeFile("tags.json", JSON.stringify(arr), function (err, result) {
         if (err) console.log("error", err);
       });
@@ -40,11 +40,13 @@ const loadAndFetch = async () => {
           x._typeGroup === "socialTag" ||
           x._typeGroup === "topics"
         ) {
+          console.log(arr2);
           arr2.push(x.name);
         }
       }
       return arr.push(arr2);
     } catch (err) {
+      console.log(err);
       return arr.push(["DESCRIPTION EMPTY"]);
     }
   }, 2000);

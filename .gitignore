@@ -1,3 +1,7 @@
 /.env
 execOrder.js
 exec.txx
+# all nodes modules
+node_modules
+allDescriptions.json
+.gitignore

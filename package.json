@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "airtable": "^0.11.5",
+    "dotenv": "^16.0.2",
     "fs": "*",
     "nodemon": "^2.0.20",
     "opencalais-tagging": "^2.2.0"
