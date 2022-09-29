@@ -1,12 +1,17 @@
+const fs = require("fs");
 const Airtable = require("airtable");
 require("dotenv").config();
 
-export const apiKey = process.env["AIRTABLE_API_KEY"];
-export const baseId = process.env["AIRTABLE_BASE_ID"];
+const apiKey = process.env["AIRTABLE_API_KEY"];
+const baseId = process.env["AIRTABLE_BASE_ID"];
 
-const file = await fs.readFileSync("tags.json");
+const file = fs.readFileSync("tags.json");
 const fileData = JSON.parse(file);
 
+let descArr = fileData
+  .map(d => Object.keys(d).map((key) => d[key]))
+  .reduce((a, b) => a.concat(b), [])
+  .map(d => d.map((e) => e.replace(/_/g, " ")));
 
 const allRecords = [];
 
@@ -17,9 +22,7 @@ base("Youtube Videos")
     view: "Grid view",
   })
   .eachPage(function page(records, fetchNextPage) {
-    records.forEach(function (record) {
-      allRecords.push(record.id);
-    });
+    records.forEach((record) => allRecords.push(record.id));
     fetchNextPage();
   })
   .then(() => {
@@ -27,15 +30,22 @@ base("Youtube Videos")
       base("Youtube Videos").update(
         allRecords[i],
         {
-          test: fileData[i].join(", "),
+          test: descArr[i].join(", "),
         },
-        function (err, record) {
+        function (err) {
           if (err) {
             console.error(err);
             return;
           }
-        //   console.log(record.get("test"));
         }
       );
     }
   });
+
+  // craete dummy array
+  const dummy = ["f1","a2",3,4,5,6,7]
+
+  for(let i of dummy){
+    console.log(i)
+  }
+  

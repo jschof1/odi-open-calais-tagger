@@ -1,19 +1,22 @@
 const calais = require("opencalais-tagging");
 var fs = require("fs");
-require("dotenv").config();
 
-const token = process.env["API_TOKEN"];
+require("dotenv").config();
+const token2 = process.env["API_TOKEN2"];
 
 const loadAndFetch = async () => {
-  let arr = [];
   let file = await fs.readFileSync("allDescriptions.json");
   let fileData = JSON.parse(file);
-  let i = 0;
 
+  let arr = [];
+
+  let i = -1;
 
   const interval = setInterval(async () => {
-    i++;
-    if (i === 150) {
+    let arr2 = [];
+    i += 1;
+    // choose how many requests you want to make - REMEMBER you are limited to 500 per day
+    if (i === 50) {
       fs.writeFile("tags.json", JSON.stringify(arr), function (err, result) {
         if (err) console.log("error", err);
       });
@@ -22,7 +25,7 @@ const loadAndFetch = async () => {
     try {
       const options = {
         content: fileData[i],
-        accessToken: token,
+        accessToken: token2,
       };
 
       const allData = await calais.tag(options);
@@ -30,7 +33,6 @@ const loadAndFetch = async () => {
 
       let calaisResponse = Object.values(allData);
       const allNames = calaisResponse.filter((obj) => obj.name);
-      let arr2 = [];
 
       for (let x of allNames) {
         if (
@@ -40,15 +42,13 @@ const loadAndFetch = async () => {
           x._typeGroup === "socialTag" ||
           x._typeGroup === "topics"
         ) {
-          console.log(arr2);
           arr2.push(x.name);
         }
       }
-      return arr.push(arr2);
+      return arr.push({ [i]: arr2 });
     } catch (err) {
-      console.log(err);
-      return arr.push(["DESCRIPTION EMPTY"]);
+      return arr.push({ [i]: ["DESCRIPTION EMPTY"] });
     }
-  }, 2000);
+  }, 5000);
 };
 loadAndFetch();
