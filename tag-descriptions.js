@@ -13,7 +13,7 @@ const loadAndFetch = async () => {
 
   const interval = setInterval(async () => {
     i++;
-    if (i === arr.length - filedData.length - 1) {
+    if (i === arr.length - fileData.length - 1) {
       fs.writeFile("tags.json", JSON.stringify(arr), function (err, result) {
         if (err) console.log("error", err);
       });
