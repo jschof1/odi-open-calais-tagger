@@ -1,17 +1,19 @@
 const calais = require("opencalais-tagging");
 var fs = require("fs");
-require("dotenv").config({ path: "/.env" });
+require("dotenv").config();
 
-export const token = process.env["API_TOKEN"];
+const token = process.env["API_TOKEN"];
 
 const loadAndFetch = async () => {
   let arr = [];
   let file = await fs.readFileSync("allDescriptions.json");
   let fileData = JSON.parse(file);
   let i = 0;
+
+
   const interval = setInterval(async () => {
     i++;
-    if (i === arr.length - 1) {
+    if (i === arr.length - filedData.length - 1) {
       fs.writeFile("tags.json", JSON.stringify(arr), function (err, result) {
         if (err) console.log("error", err);
       });
