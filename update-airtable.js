@@ -41,11 +41,3 @@ base("Youtube Videos")
       );
     }
   });
-
-  // craete dummy array
-  const dummy = ["f1","a2",3,4,5,6,7]
-
-  for(let i of dummy){
-    console.log(i)
-  }
-  
